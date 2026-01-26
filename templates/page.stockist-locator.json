@@ -12,26 +12,8 @@
     "section_XFGT6p": {
       "type": "section",
       "blocks": {
-        "stockist_locator_nXxPjR": {
-          "type": "stockist-locator",
-          "name": "Stockist locator",
-          "settings": {
-            "title": "Find a store",
-            "padding_top": 80,
-            "padding_bottom": 80,
-            "title_size": 40,
-            "title_color": "#000000",
-            "text_color": "#333333",
-            "link_color": "#000000",
-            "accent_color": "#000000",
-            "border_color": "#e5e5e5",
-            "map_color": "#666666"
-          },
-          "blocks": {}
-        }
       },
       "block_order": [
-        "stockist_locator_nXxPjR"
       ],
       "name": "t:names.custom_section",
       "settings": {

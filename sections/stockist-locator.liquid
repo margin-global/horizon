@@ -144,8 +144,6 @@
           name: {{ stockist.company.value | json }},
           address: {{ stockist.address.value | default: '' | json }},
           city: {{ stockist.city.value | default: '' | json }},
-          state: '',
-          zip: '',
           country: {{ stockist.country.value | default: '' | json }},
           phone: {{ stockist.phone_number.value | default: '' | json }},
           url: {{ stockist.website.value | default: '' | json }},
