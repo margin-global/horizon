@@ -12,35 +12,26 @@
     "section_XFGT6p": {
       "type": "section",
       "blocks": {
-        "text_FfDWP4": {
-          "type": "text",
-          "name": "t:names.text",
+        "stockist_locator_nXxPjR": {
+          "type": "stockist-locator",
+          "name": "Stockist locator",
           "settings": {
-            "text": "{{ closest.page.content }}",
-            "width": "fit-content",
-            "max_width": "normal",
-            "alignment": "left",
-            "type_preset": "rte",
-            "font": "var(--font-body--family)",
-            "font_size": "1rem",
-            "line_height": "normal",
-            "letter_spacing": "normal",
-            "case": "none",
-            "wrap": "pretty",
-            "color": "var(--color-foreground)",
-            "background": false,
-            "background_color": "#00000026",
-            "corner_radius": 0,
-            "padding-block-start": 0,
-            "padding-block-end": 0,
-            "padding-inline-start": 0,
-            "padding-inline-end": 0
+            "title": "Find a store",
+            "padding_top": 80,
+            "padding_bottom": 80,
+            "title_size": 40,
+            "title_color": "#000000",
+            "text_color": "#333333",
+            "link_color": "#000000",
+            "accent_color": "#000000",
+            "border_color": "#e5e5e5",
+            "map_color": "#666666"
           },
           "blocks": {}
         }
       },
       "block_order": [
-        "text_FfDWP4"
+        "stockist_locator_nXxPjR"
       ],
       "name": "t:names.custom_section",
       "settings": {
