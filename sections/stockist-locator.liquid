@@ -1,14 +1,8 @@
-<stockist-locator {{ section.shopify_attributes }} data-section-id="{{ section.id }}">
+<stockist-locator {{ section.shopify_attributes }} data-section-id="{{ section.id }}" class="color-{{ section.settings.color_scheme }}">
   <style>
     stockist-locator {
       --padding-top: {{ section.settings.padding_top }}px;
       --padding-bottom: {{ section.settings.padding_bottom }}px;
-      --title-size: {{ section.settings.title_size }}px;
-      --title-color: {{ section.settings.title_color }};
-      --text-color: {{ section.settings.text_color }};
-      --link-color: {{ section.settings.link_color }};
-      --accent-color: {{ section.settings.accent_color }};
-      --border-color: {{ section.settings.border_color }};
       --map-color: {{ section.settings.map_color }};
     }
   </style>
@@ -187,16 +181,16 @@
       flex: 1;
       padding: 12px 16px;
       padding-right: 40px;
-      border: 1px solid var(--border-color);
+      border: 1px solid rgb(var(--color-foreground-rgb) / 0.15);
       border-radius: 8px;
       font-size: 16px;
-      color: var(--text-color);
-      background: #fff;
+      color: var(--color-foreground);
+      background: var(--color-background);
 
       &:focus {
         outline: none;
-        border-color: var(--accent-color);
-        box-shadow: 0 0 0 3px color-mix(in srgb, var(--accent-color) 20%, transparent);
+        border-color: var(--color-primary-button-background);
+        box-shadow: 0 0 0 3px color-mix(in srgb, var(--color-primary-button-background) 20%, transparent);
       }
     }
 
@@ -207,7 +201,7 @@
       border: none;
       padding: 8px;
       cursor: pointer;
-      color: var(--text-color);
+      color: var(--color-foreground);
       opacity: 0.5;
 
       &:hover {
@@ -217,8 +211,8 @@
 
     .stockist-locator__search-btn {
       padding: 12px 16px;
-      background: var(--accent-color);
-      color: #fff;
+      background: var(--color-primary-button-background);
+      color: var(--color-primary-button-text);
       border: none;
       border-radius: 8px;
       cursor: pointer;
@@ -236,8 +230,8 @@
       top: 100%;
       left: 0;
       right: 60px;
-      background: #fff;
-      border: 1px solid var(--border-color);
+      background: var(--color-background);
+      border: 1px solid rgb(var(--color-foreground-rgb) / 0.15);
       border-radius: 8px;
       margin-top: 4px;
       max-height: 300px;
@@ -256,11 +250,11 @@
       padding: 12px 16px;
       cursor: pointer;
       font-size: 14px;
-      color: var(--text-color);
+      color: var(--color-foreground);
 
       &:hover,
       &.stockist-locator__autocomplete-item--highlighted {
-        background: #f5f5f5;
+        background: rgb(var(--color-foreground-rgb) / 0.05);
       }
     }
 
@@ -276,14 +270,14 @@
       gap: 6px;
       padding: 8px 12px;
       background: none;
-      border: 1px solid var(--border-color);
+      border: 1px solid rgb(var(--color-foreground-rgb) / 0.15);
       border-radius: 6px;
       font-size: 14px;
-      color: var(--text-color);
+      color: var(--color-foreground);
       cursor: pointer;
 
       &:hover {
-        background: #f5f5f5;
+        background: rgb(var(--color-foreground-rgb) / 0.05);
       }
 
       &:disabled {
@@ -301,7 +295,7 @@
     .stockist-locator__count {
       margin-top: 16px;
       font-size: 14px;
-      color: var(--text-color);
+      color: var(--color-foreground);
       opacity: 0.7;
     }
 
@@ -314,16 +308,16 @@
 
     .stockist-locator__filter-label {
       font-size: 14px;
-      color: var(--text-color);
+      color: var(--color-foreground);
     }
 
     .stockist-locator__filter-select {
       padding: 6px 12px;
-      border: 1px solid var(--border-color);
+      border: 1px solid rgb(var(--color-foreground-rgb) / 0.15);
       border-radius: 6px;
       font-size: 14px;
-      color: var(--text-color);
-      background: #fff;
+      color: var(--color-foreground);
+      background: var(--color-background);
     }
 
     .stockist-locator__main-content {
@@ -343,18 +337,18 @@
 
     .stockist-locator__item {
       padding: 16px;
-      border: 1px solid var(--border-color);
+      border: 1px solid rgb(var(--color-foreground-rgb) / 0.15);
       border-radius: 8px;
       cursor: pointer;
       transition: border-color 0.2s, box-shadow 0.2s;
 
       &:hover {
-        border-color: var(--accent-color);
+        border-color: var(--color-primary-button-background);
       }
 
       &.stockist-locator__item--active {
-        border-color: var(--accent-color);
-        box-shadow: 0 0 0 3px color-mix(in srgb, var(--accent-color) 20%, transparent);
+        border-color: var(--color-primary-button-background);
+        box-shadow: 0 0 0 3px color-mix(in srgb, var(--color-primary-button-background) 20%, transparent);
       }
     }
 
@@ -371,8 +365,8 @@
       justify-content: center;
       width: 24px;
       height: 24px;
-      background: var(--accent-color);
-      color: #fff;
+      background: var(--color-primary-button-background);
+      color: var(--color-primary-button-text);
       border-radius: 50%;
       font-size: 12px;
       font-weight: 600;
@@ -382,20 +376,20 @@
     .stockist-locator__item-name {
       font-size: 16px;
       font-weight: 600;
-      color: var(--text-color);
+      color: var(--color-foreground);
       margin: 0;
       flex: 1;
     }
 
     .stockist-locator__item-distance {
       font-size: 14px;
-      color: var(--text-color);
+      color: var(--color-foreground);
       opacity: 0.7;
     }
 
     .stockist-locator__item-address {
       font-size: 14px;
-      color: var(--text-color);
+      color: var(--color-foreground);
       margin: 0 0 8px;
       opacity: 0.8;
     }
@@ -408,7 +402,7 @@
 
     .stockist-locator__item-link {
       font-size: 14px;
-      color: var(--link-color);
+      color: var(--color-foreground);
       text-decoration: none;
 
       &:hover {
@@ -419,7 +413,7 @@
     .stockist-locator__empty {
       text-align: center;
       padding: 40px 20px;
-      color: var(--text-color);
+      color: var(--color-foreground);
       opacity: 0.7;
     }
 
@@ -454,7 +448,7 @@
 
     .stockist-locator__skeleton {
       padding: 16px;
-      border: 1px solid var(--border-color);
+      border: 1px solid rgb(var(--color-foreground-rgb) / 0.15);
       border-radius: 8px;
     }
 
@@ -513,7 +507,7 @@
     }
 
     .stockist-locator__marker-number {
-      color: #fff;
+      color: var(--color-primary-button-text);
       font-size: 12px;
       font-weight: 600;
     }
@@ -522,7 +516,7 @@
       width: 16px;
       height: 16px;
       background: #3b82f6;
-      border: 3px solid #fff;
+      border: 3px solid var(--color-background);
       border-radius: 50%;
       box-shadow: 0 2px 4px rgba(0, 0, 0, 0.3);
     }
@@ -597,6 +591,12 @@
       "content": "t:content.content"
     },
     {
+      "type": "color_scheme",
+      "id": "color_scheme",
+      "label": "t:settings.color_scheme",
+      "default": "scheme-1"
+    },
+    {
       "type": "header",
       "content": "t:content.spacing"
     },
@@ -622,51 +622,7 @@
     },
     {
       "type": "header",
-      "content": "t:content.typography"
-    },
-    {
-      "type": "range",
-      "id": "title_size",
-      "label": "t:settings.title_size",
-      "min": 24,
-      "max": 72,
-      "step": 2,
-      "unit": "px",
-      "default": 40
-    },
-    {
-      "type": "header",
       "content": "t:content.colors"
-    },
-    {
-      "type": "color",
-      "id": "title_color",
-      "label": "t:settings.title_color",
-      "default": "#000000"
-    },
-    {
-      "type": "color",
-      "id": "text_color",
-      "label": "t:settings.text_color",
-      "default": "#333333"
-    },
-    {
-      "type": "color",
-      "id": "link_color",
-      "label": "t:settings.link_color",
-      "default": "#000000"
-    },
-    {
-      "type": "color",
-      "id": "accent_color",
-      "label": "t:settings.accent_color",
-      "default": "#000000"
-    },
-    {
-      "type": "color",
-      "id": "border_color",
-      "label": "t:settings.border_color",
-      "default": "#e5e5e5"
     },
     {
       "type": "color",
