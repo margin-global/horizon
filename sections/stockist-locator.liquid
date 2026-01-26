@@ -1,0 +1,686 @@
+<stockist-locator {{ section.shopify_attributes }} data-section-id="{{ section.id }}">
+  <style>
+    stockist-locator {
+      --padding-top: {{ section.settings.padding_top }}px;
+      --padding-bottom: {{ section.settings.padding_bottom }}px;
+      --title-size: {{ section.settings.title_size }}px;
+      --title-color: {{ section.settings.title_color }};
+      --text-color: {{ section.settings.text_color }};
+      --link-color: {{ section.settings.link_color }};
+      --accent-color: {{ section.settings.accent_color }};
+      --border-color: {{ section.settings.border_color }};
+      --map-color: {{ section.settings.map_color }};
+    }
+  </style>
+
+  <div class="stockist-locator__container">
+    <div class="stockist-locator__search-section">
+      <div class="stockist-locator__search-box">
+        <input
+          type="search"
+          ref="input"
+          class="stockist-locator__search-input"
+          placeholder="Enter city, address, or zip code"
+          autocomplete="off"
+          aria-label="Search for store locations"
+          aria-expanded="false"
+          aria-controls="autocomplete-{{ section.id }}"
+          on:keydown="/handleInputKeydown"
+          on:input="/handleInputChange"
+        >
+        <button
+          ref="clearBtn"
+          class="stockist-locator__clear-btn"
+          hidden
+          aria-label="Clear search"
+          on:click="/handleClear"
+        >
+          <svg
+            xmlns="http://www.w3.org/2000/svg"
+            width="16"
+            height="16"
+            viewBox="0 0 24 24"
+            fill="none"
+            stroke="currentColor"
+            stroke-width="2"
+            aria-hidden="true"
+          >
+            <line x1="18" y1="6" x2="6" y2="18"></line>
+            <line x1="6" y1="6" x2="18" y2="18"></line>
+          </svg>
+        </button>
+        <button
+          ref="searchBtn"
+          class="stockist-locator__search-btn"
+          aria-label="Search"
+          on:click="/handleSearch"
+        >
+          <svg
+            xmlns="http://www.w3.org/2000/svg"
+            width="18"
+            height="18"
+            viewBox="0 0 24 24"
+            fill="none"
+            stroke="currentColor"
+            stroke-width="2"
+            aria-hidden="true"
+          >
+            <circle cx="11" cy="11" r="8"></circle>
+            <line x1="21" y1="21" x2="16.65" y2="16.65"></line>
+          </svg>
+        </button>
+        <ul
+          ref="autocomplete"
+          id="autocomplete-{{ section.id }}"
+          class="stockist-locator__autocomplete"
+          role="listbox"
+        ></ul>
+      </div>
+
+      <div class="stockist-locator__search-actions">
+        <button
+          ref="geolocationBtn"
+          class="stockist-locator__action-btn"
+          on:click="/handleGeolocation"
+        >
+          <svg
+            xmlns="http://www.w3.org/2000/svg"
+            width="16"
+            height="16"
+            viewBox="0 0 24 24"
+            fill="none"
+            stroke="currentColor"
+            stroke-width="2"
+            aria-hidden="true"
+          >
+            <circle cx="12" cy="12" r="3"></circle>
+            <path d="M12 2v4m0 12v4m10-10h-4M6 12H2"></path>
+          </svg>
+          Use my location
+        </button>
+        <button
+          ref="shareBtn"
+          class="stockist-locator__action-btn"
+          hidden
+          on:click="/handleShare"
+        >
+          <svg
+            xmlns="http://www.w3.org/2000/svg"
+            width="16"
+            height="16"
+            viewBox="0 0 24 24"
+            fill="none"
+            stroke="currentColor"
+            stroke-width="2"
+            aria-hidden="true"
+          >
+            <circle cx="18" cy="5" r="3"></circle>
+            <circle cx="6" cy="12" r="3"></circle>
+            <circle cx="18" cy="19" r="3"></circle>
+            <line x1="8.59" y1="13.51" x2="15.42" y2="17.49"></line>
+            <line x1="15.41" y1="6.51" x2="8.59" y2="10.49"></line>
+          </svg>
+          Share
+        </button>
+      </div>
+
+      <div ref="count" class="stockist-locator__count"></div>
+    </div>
+
+    <div class="stockist-locator__main-content">
+      <div ref="list" class="stockist-locator__list"></div>
+      <div ref="map" class="stockist-locator__map"></div>
+    </div>
+
+    <div ref="announcer" class="visually-hidden" aria-live="polite" aria-atomic="true"></div>
+  </div>
+
+  <script>
+    window.STOCKIST_DATA = [
+      {% paginate metaobjects.stockists.values by 250 %}
+      {%- for stockist in metaobjects.stockists.values -%}
+        {
+          id: {{ forloop.index }},
+          name: {{ stockist.company.value | json }},
+          address: {{ stockist.address.value | default: '' | json }},
+          city: {{ stockist.city.value | default: '' | json }},
+          state: '',
+          zip: '',
+          country: {{ stockist.country.value | default: '' | json }},
+          phone: {{ stockist.phone_number.value | default: '' | json }},
+          url: {{ stockist.website.value | default: '' | json }},
+          mapUrl: {{ stockist.google_maps_link.value | default: '' | json }},
+          lat: {{ stockist.latitude.value | default: 0 }},
+          lng: {{ stockist.longitude.value | default: 0 }}
+        }{%- unless forloop.last -%},{%- endunless -%}
+      {%- endfor -%}
+      {% endpaginate %}
+    ];
+  </script>
+
+  <script src="{{ 'stockist-locator.js' | asset_url }}" type="module"></script>
+</stockist-locator>
+
+{% stylesheet %}
+  stockist-locator {
+    display: block;
+    width: 100%;
+    padding: var(--padding-top) 0 var(--padding-bottom);
+
+    .stockist-locator__container {
+      max-width: 1400px;
+      margin: 0 auto;
+      padding: 0 20px;
+    }
+
+    .stockist-locator__search-section {
+      margin-bottom: 24px;
+    }
+
+    .stockist-locator__search-box {
+      position: relative;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      margin-bottom: 12px;
+    }
+
+    .stockist-locator__search-input {
+      flex: 1;
+      padding: 12px 16px;
+      padding-right: 40px;
+      border: 1px solid var(--border-color);
+      border-radius: 8px;
+      font-size: 16px;
+      color: var(--text-color);
+      background: #fff;
+
+      &:focus {
+        outline: none;
+        border-color: var(--accent-color);
+        box-shadow: 0 0 0 3px color-mix(in srgb, var(--accent-color) 20%, transparent);
+      }
+    }
+
+    .stockist-locator__clear-btn {
+      position: absolute;
+      right: 60px;
+      background: none;
+      border: none;
+      padding: 8px;
+      cursor: pointer;
+      color: var(--text-color);
+      opacity: 0.5;
+
+      &:hover {
+        opacity: 1;
+      }
+    }
+
+    .stockist-locator__search-btn {
+      padding: 12px 16px;
+      background: var(--accent-color);
+      color: #fff;
+      border: none;
+      border-radius: 8px;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+
+      &:hover {
+        opacity: 0.9;
+      }
+    }
+
+    .stockist-locator__autocomplete {
+      position: absolute;
+      top: 100%;
+      left: 0;
+      right: 60px;
+      background: #fff;
+      border: 1px solid var(--border-color);
+      border-radius: 8px;
+      margin-top: 4px;
+      max-height: 300px;
+      overflow-y: auto;
+      z-index: 100;
+      list-style: none;
+      padding: 0;
+      display: none;
+
+      &.stockist-locator__autocomplete--active {
+        display: block;
+      }
+    }
+
+    .stockist-locator__autocomplete-item {
+      padding: 12px 16px;
+      cursor: pointer;
+      font-size: 14px;
+      color: var(--text-color);
+
+      &:hover,
+      &.stockist-locator__autocomplete-item--highlighted {
+        background: #f5f5f5;
+      }
+    }
+
+    .stockist-locator__search-actions {
+      display: flex;
+      gap: 12px;
+      flex-wrap: wrap;
+    }
+
+    .stockist-locator__action-btn {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      padding: 8px 12px;
+      background: none;
+      border: 1px solid var(--border-color);
+      border-radius: 6px;
+      font-size: 14px;
+      color: var(--text-color);
+      cursor: pointer;
+
+      &:hover {
+        background: #f5f5f5;
+      }
+
+      &:disabled {
+        opacity: 0.5;
+        cursor: not-allowed;
+      }
+
+      &.stockist-locator__action-btn--copied {
+        background: #e8f5e9;
+        border-color: #4caf50;
+        color: #2e7d32;
+      }
+    }
+
+    .stockist-locator__count {
+      margin-top: 16px;
+      font-size: 14px;
+      color: var(--text-color);
+      opacity: 0.7;
+    }
+
+    .stockist-locator__filters {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      margin-top: 12px;
+    }
+
+    .stockist-locator__filter-label {
+      font-size: 14px;
+      color: var(--text-color);
+    }
+
+    .stockist-locator__filter-select {
+      padding: 6px 12px;
+      border: 1px solid var(--border-color);
+      border-radius: 6px;
+      font-size: 14px;
+      color: var(--text-color);
+      background: #fff;
+    }
+
+    .stockist-locator__main-content {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 24px;
+      min-height: 500px;
+    }
+
+    .stockist-locator__list {
+      max-height: 600px;
+      overflow-y: auto;
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+    }
+
+    .stockist-locator__item {
+      padding: 16px;
+      border: 1px solid var(--border-color);
+      border-radius: 8px;
+      cursor: pointer;
+      transition: border-color 0.2s, box-shadow 0.2s;
+
+      &:hover {
+        border-color: var(--accent-color);
+      }
+
+      &.stockist-locator__item--active {
+        border-color: var(--accent-color);
+        box-shadow: 0 0 0 3px color-mix(in srgb, var(--accent-color) 20%, transparent);
+      }
+    }
+
+    .stockist-locator__item-header {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      margin-bottom: 8px;
+    }
+
+    .stockist-locator__item-number {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      width: 24px;
+      height: 24px;
+      background: var(--accent-color);
+      color: #fff;
+      border-radius: 50%;
+      font-size: 12px;
+      font-weight: 600;
+      flex-shrink: 0;
+    }
+
+    .stockist-locator__item-name {
+      font-size: 16px;
+      font-weight: 600;
+      color: var(--text-color);
+      margin: 0;
+      flex: 1;
+    }
+
+    .stockist-locator__item-distance {
+      font-size: 14px;
+      color: var(--text-color);
+      opacity: 0.7;
+    }
+
+    .stockist-locator__item-address {
+      font-size: 14px;
+      color: var(--text-color);
+      margin: 0 0 8px;
+      opacity: 0.8;
+    }
+
+    .stockist-locator__item-details {
+      display: flex;
+      gap: 12px;
+      flex-wrap: wrap;
+    }
+
+    .stockist-locator__item-link {
+      font-size: 14px;
+      color: var(--link-color);
+      text-decoration: none;
+
+      &:hover {
+        text-decoration: underline;
+      }
+    }
+
+    .stockist-locator__empty {
+      text-align: center;
+      padding: 40px 20px;
+      color: var(--text-color);
+      opacity: 0.7;
+    }
+
+    .stockist-locator__error {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      padding: 12px 16px;
+      background: #fef2f2;
+      border: 1px solid #fecaca;
+      border-radius: 8px;
+      color: #dc2626;
+      font-size: 14px;
+    }
+
+    .stockist-locator__error-message {
+      flex: 1;
+    }
+
+    .stockist-locator__error-dismiss {
+      background: none;
+      border: none;
+      font-size: 20px;
+      cursor: pointer;
+      color: inherit;
+      opacity: 0.7;
+
+      &:hover {
+        opacity: 1;
+      }
+    }
+
+    .stockist-locator__skeleton {
+      padding: 16px;
+      border: 1px solid var(--border-color);
+      border-radius: 8px;
+    }
+
+    .stockist-locator__skeleton-line {
+      height: 16px;
+      background: linear-gradient(90deg, #f0f0f0 25%, #e0e0e0 50%, #f0f0f0 75%);
+      background-size: 200% 100%;
+      animation: shimmer 1.5s infinite;
+      border-radius: 4px;
+      margin-bottom: 8px;
+
+      &.stockist-locator__skeleton-line--short {
+        width: 40%;
+      }
+
+      &.stockist-locator__skeleton-line--medium {
+        width: 70%;
+      }
+
+      &:last-child {
+        margin-bottom: 0;
+      }
+    }
+
+    @keyframes shimmer {
+      0% {
+        background-position: 200% 0;
+      }
+      100% {
+        background-position: -200% 0;
+      }
+    }
+
+    .stockist-locator__map {
+      border-radius: 8px;
+      overflow: hidden;
+      min-height: 400px;
+    }
+
+    .stockist-locator__marker {
+      width: 28px;
+      height: 28px;
+      background: var(--accent-color, #000);
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      cursor: pointer;
+      transition: transform 0.2s;
+      box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+
+      &:hover,
+      &.stockist-locator__marker--active {
+        transform: scale(1.2);
+      }
+    }
+
+    .stockist-locator__marker-number {
+      color: #fff;
+      font-size: 12px;
+      font-weight: 600;
+    }
+
+    .stockist-locator__user-marker {
+      width: 16px;
+      height: 16px;
+      background: #3b82f6;
+      border: 3px solid #fff;
+      border-radius: 50%;
+      box-shadow: 0 2px 4px rgba(0, 0, 0, 0.3);
+    }
+
+    .stockist-locator__popup {
+      padding: 4px;
+    }
+
+    .stockist-locator__popup-name {
+      font-weight: 600;
+      margin-bottom: 4px;
+    }
+
+    .stockist-locator__popup-address {
+      font-size: 14px;
+      opacity: 0.8;
+      margin-bottom: 8px;
+    }
+
+    .stockist-locator__popup-link {
+      font-size: 14px;
+      color: var(--link-color, #000);
+    }
+
+    .visually-hidden {
+      position: absolute;
+      width: 1px;
+      height: 1px;
+      padding: 0;
+      margin: -1px;
+      overflow: hidden;
+      clip: rect(0, 0, 0, 0);
+      white-space: nowrap;
+      border: 0;
+    }
+
+    @media screen and (max-width: 767px) {
+      .stockist-locator__main-content {
+        grid-template-columns: 1fr;
+      }
+
+      .stockist-locator__map {
+        order: -1;
+        min-height: 300px;
+      }
+
+      .stockist-locator__list {
+        max-height: none;
+      }
+    }
+
+    @media (prefers-reduced-motion: reduce) {
+      .stockist-locator__marker,
+      .stockist-locator__item {
+        transition: none;
+      }
+
+      .stockist-locator__skeleton-line {
+        animation: none;
+      }
+    }
+  }
+{% endstylesheet %}
+
+{% schema %}
+{
+  "name": "Stockist locator",
+  "tag": "section",
+  "settings": [
+    {
+      "type": "header",
+      "content": "Content"
+    },
+    {
+      "type": "header",
+      "content": "Spacing"
+    },
+    {
+      "type": "range",
+      "id": "padding_top",
+      "label": "Padding top",
+      "min": 0,
+      "max": 200,
+      "step": 10,
+      "unit": "px",
+      "default": 80
+    },
+    {
+      "type": "range",
+      "id": "padding_bottom",
+      "label": "Padding bottom",
+      "min": 0,
+      "max": 200,
+      "step": 10,
+      "unit": "px",
+      "default": 80
+    },
+    {
+      "type": "header",
+      "content": "Typography"
+    },
+    {
+      "type": "range",
+      "id": "title_size",
+      "label": "Title size",
+      "min": 24,
+      "max": 72,
+      "step": 2,
+      "unit": "px",
+      "default": 40
+    },
+    {
+      "type": "header",
+      "content": "Colors"
+    },
+    {
+      "type": "color",
+      "id": "title_color",
+      "label": "Title color",
+      "default": "#000000"
+    },
+    {
+      "type": "color",
+      "id": "text_color",
+      "label": "Text color",
+      "default": "#333333"
+    },
+    {
+      "type": "color",
+      "id": "link_color",
+      "label": "Link color",
+      "default": "#000000"
+    },
+    {
+      "type": "color",
+      "id": "accent_color",
+      "label": "Accent color",
+      "default": "#000000"
+    },
+    {
+      "type": "color",
+      "id": "border_color",
+      "label": "Border color",
+      "default": "#e5e5e5"
+    },
+    {
+      "type": "color",
+      "id": "map_color",
+      "label": "Map tint color",
+      "default": "#666666"
+    }
+  ],
+  "presets": [
+    {
+      "name": "Stockist locator"
+    }
+  ]
+}
+{% endschema %}
