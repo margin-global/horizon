@@ -1,1 +1,187 @@
-{"type":"footer","name":"Footer","sections":{"footer":{"type":"footer","blocks":{"text_pdLaRz":{"type":"text","name":"t:names.text","settings":{"text":"<p>Sign up for exclusive discounts & releases:<\/p>","width":"100%","max_width":"none","alignment":"left","type_preset":"h3","font":"var(--font-body--family)","font_size":"1rem","line_height":"normal","letter_spacing":"normal","case":"none","wrap":"pretty","color":"var(--color-foreground)","background":false,"background_color":"#00000026","corner_radius":0,"padding-block-start":0,"padding-block-end":0,"padding-inline-start":0,"padding-inline-end":0},"blocks":{}},"email_signup_HwnULV":{"type":"email-signup","name":"Email input","settings":{"width":"fill","custom_width":100,"inherit_color_scheme":true,"color_scheme":"scheme-1","border_style":"underline","border_width":1,"border_radius":39,"input_type_preset":"paragraph","style_class":"button-unstyled","display_type":"arrow","label":"Sign up","integrated_button":true,"button_type_preset":"paragraph","padding-block-start":0,"padding-block-end":0,"padding-inline-start":0,"padding-inline-end":0},"blocks":{}},"footer_utilities_KRaGcH":{"type":"footer-utilities","name":"t:names.footer_utilities","settings":{"divider_thickness":0,"padding-block-start":48,"padding-block-end":0},"blocks":{"copyright":{"type":"_footer-copyright","static":true,"settings":{"show_powered_by":false,"font_size":"0.75rem","case":"uppercase"},"blocks":{}},"policy_list":{"type":"_footer-policy-list","static":true,"settings":{"font_size":"0.75rem","case":"none"},"blocks":{}},"social_icons":{"type":"_footer-social-icons","static":true,"settings":{},"blocks":{"social_link_9i9EqD":{"type":"_social-link","name":"Instagram ","settings":{"link":"https:\/\/www.instagram.com\/margin.global"},"blocks":{}},"social_link_kd8UUt":{"type":"_social-link","name":"TikTok","settings":{"link":"https:\/\/www.tiktok.com\/@margin.global"},"blocks":{}}},"block_order":["social_link_9i9EqD","social_link_kd8UUt"]}},"block_order":[]}},"block_order":["text_pdLaRz","email_signup_HwnULV","footer_utilities_KRaGcH"],"name":"Footer","settings":{"content_direction":"column","vertical_on_mobile":true,"horizontal_alignment":"center","vertical_alignment":"center","align_baseline":false,"horizontal_alignment_flex_direction_column":"flex-start","vertical_alignment_flex_direction_column":"flex-start","gap":6,"section_width":"page-width","section_height":"","color_scheme":"scheme-1","background_media":"none","video_position":"cover","background_image_position":"cover","padding-block-start":48,"padding-block-end":48}}},"order":["footer"]}
+/*
+ * ------------------------------------------------------------
+ * IMPORTANT: The contents of this file are auto-generated.
+ *
+ * This file may be updated by the Shopify admin theme editor
+ * or related systems. Please exercise caution as any changes
+ * made to this file may be overwritten.
+ * ------------------------------------------------------------
+ */
+{
+  "type": "footer",
+  "name": "t:names.footer",
+  "sections": {
+    "footer": {
+      "type": "footer",
+      "blocks": {
+        "group_pCyHag": {
+          "type": "group",
+          "name": "t:names.group",
+          "settings": {
+            "content_direction": "column",
+            "vertical_on_mobile": true,
+            "horizontal_alignment": "flex-start",
+            "vertical_alignment": "center",
+            "align_baseline": false,
+            "horizontal_alignment_flex_direction_column": "flex-start",
+            "vertical_alignment_flex_direction_column": "center",
+            "gap": 12,
+            "width": "fill",
+            "custom_width": 100,
+            "width_mobile": "fill",
+            "custom_width_mobile": 100,
+            "height": "fit",
+            "custom_height": 100,
+            "inherit_color_scheme": true,
+            "color_scheme": "",
+            "background_media": "none",
+            "video_position": "cover",
+            "background_image_position": "cover",
+            "border": "none",
+            "border_width": 1,
+            "border_opacity": 100,
+            "border_radius": 0,
+            "toggle_overlay": false,
+            "overlay_color": "#00000026",
+            "overlay_style": "solid",
+            "gradient_direction": "to top",
+            "link": "",
+            "open_in_new_tab": false,
+            "placeholder": "",
+            "padding-block-start": 0,
+            "padding-block-end": 0,
+            "padding-inline-start": 0,
+            "padding-inline-end": 0
+          },
+          "blocks": {
+            "text_P6igeE": {
+              "type": "text",
+              "name": "Text",
+              "settings": {
+                "text": "<p>Sign up for exclusive discounts & releases:</p>",
+                "width": "100%",
+                "max_width": "normal",
+                "alignment": "left",
+                "type_preset": "rte",
+                "font": "var(--font-body--family)",
+                "font_size": "",
+                "line_height": "normal",
+                "letter_spacing": "normal",
+                "case": "none",
+                "wrap": "pretty",
+                "color": "var(--color-foreground)",
+                "background": false,
+                "background_color": "#00000026",
+                "corner_radius": 0,
+                "padding-block-start": 0,
+                "padding-block-end": 0,
+                "padding-inline-start": 0,
+                "padding-inline-end": 0
+              },
+              "blocks": {}
+            },
+            "email_signup_PbzhaU": {
+              "type": "email-signup",
+              "name": "Email Signup",
+              "settings": {
+                "width": "fill",
+                "custom_width": 100,
+                "inherit_color_scheme": true,
+                "color_scheme": "",
+                "heading": "",
+                "heading_preset": "h3",
+                "border_style": "underline",
+                "border_width": 1,
+                "border_radius": 100,
+                "input_type_preset": "paragraph",
+                "style_class": "button-unstyled",
+                "display_type": "arrow",
+                "label": "Sign up",
+                "integrated_button": false,
+                "button_type_preset": "paragraph",
+                "padding-block-start": 0,
+                "padding-block-end": 0,
+                "padding-inline-start": 0,
+                "padding-inline-end": 0
+              },
+              "blocks": {}
+            }
+          },
+          "block_order": [
+            "text_P6igeE",
+            "email_signup_PbzhaU"
+          ]
+        }
+      },
+      "block_order": [
+        "group_pCyHag"
+      ],
+      "name": "t:names.footer",
+      "settings": {
+        "section_width": "page-width",
+        "gap": 20,
+        "color_scheme": "scheme-1",
+        "padding-block-start": 36,
+        "padding-block-end": 36
+      }
+    },
+    "utilities": {
+      "type": "footer-utilities",
+      "blocks": {
+        "copyright": {
+          "type": "footer-copyright",
+          "settings": {
+            "show_powered_by": true,
+            "font_size": "0.75rem",
+            "case": "none"
+          },
+          "blocks": {}
+        },
+        "policy_list": {
+          "type": "footer-policy-list",
+          "settings": {
+            "font_size": "0.75rem",
+            "case": "none"
+          },
+          "blocks": {}
+        },
+        "social_icons": {
+          "type": "social-links",
+          "settings": {
+            "facebook_url": "https://www.facebook.com",
+            "instagram_url": "https://www.instagram.com",
+            "youtube_url": "https://www.youtube.com",
+            "tiktok_url": "https://www.tiktok.com",
+            "twitter_url": "https://www.twitter.com",
+            "threads_url": "",
+            "linkedin_url": "",
+            "bluesky_url": "",
+            "snapchat_url": "",
+            "pinterest_url": "",
+            "tumblr_url": "",
+            "vimeo_url": "",
+            "custom_url": ""
+          },
+          "blocks": {}
+        }
+      },
+      "block_order": [
+        "copyright",
+        "policy_list",
+        "social_icons"
+      ],
+      "settings": {
+        "section_width": "page-width",
+        "gap": 24,
+        "divider_thickness": 0,
+        "color_scheme": "scheme-1",
+        "padding-block-start": 12,
+        "padding-block-end": 16
+      }
+    }
+  },
+  "order": [
+    "footer",
+    "utilities"
+  ]
+}
