@@ -1,17 +1,45 @@
+
+
+{% liquid
+  assign product_rating = blank
+
+  if closest.product != blank and request.page_type == 'collection'
+    assign product_rating = closest.product.metafields.reviews.rating.value.rating
+
+    if product_rating == blank
+      assign product_rating = closest.product.metafields.reviews.rating.value
+    endif
+  endif
+%}
+
 {% if closest.product == blank %}
   {% assign text = 'placeholders.product_title' | t %}
   {% assign product_title = '<p>' | append: text | append: '</p>' %}
   {% render 'text', fallback_text: product_title, block: block %}
-{% else %}
-  {% assign product_title = '<p>' | append: closest.product.title | append: '</p>' %}
+{% elsif closest.product != blank %}
+  {% capture product_title %}
+    <p>
+      {{- closest.product.title -}}
+      {%- if product_rating != blank -%}
+        <span class="product-title-rating">[★ {{ product_rating | round: 1 }}]</span>
+      {%- endif -%}
+    </p>
+  {% endcapture %}
   <a
     class="contents user-select-text"
     ref="productTitleLink"
-    href="{{ closest.product.selected_or_first_available_variant.url }}"
+    href="{% render 'product-card-variant-url', product: closest.product %}"
+    aria-hidden="true"
   >
     {% render 'text', fallback_text: product_title, block: block %}
   </a>
 {% endif %}
+
+{% stylesheet %}
+  .product-title-rating {
+    white-space: nowrap;
+  }
+{% endstylesheet %}
 
 {% schema %}
 {
